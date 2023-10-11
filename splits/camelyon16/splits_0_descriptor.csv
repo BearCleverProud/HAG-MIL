@@ -1,0 +1,3 @@
+,train,val,test
+normal,110,47,80
+tumor,78,33,49

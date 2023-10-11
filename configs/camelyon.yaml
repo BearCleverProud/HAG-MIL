@@ -1,0 +1,80 @@
+storage_arguments:
+  # the root directory of both logs and checkpoints
+  result_dir: RESULT_ROOT_DIR
+  # save model to this directory
+  model_dir: logs/
+  # save log to this directory
+  log_dir: logs/
+  # unique identification of the experiment
+  exp_code: IAT_experiments/
+  # task identification
+  task: camelyon16
+  # save top-k best performance model
+  save_top_k: 1
+
+hyperparams_arguments:
+  # random seeds used in this experiment
+  seed: 6
+  # learning rate
+  lr: 0.00001
+  # weight decay
+  reg: 0.00001
+  # maximum running epochs
+  max_epoch: 200
+  # configure early stop
+  early_stop: 20
+  # GPU used to train
+  gpus: [0,1,2,3]
+  # number of training patches
+  t_patch: 7000
+  # number of validating patches
+  v_patch: 10000
+
+
+data_arguments: 
+  # where the WSI slides are stored
+  data_dir: SLIDE_DIR
+  # where the extracted features are stored
+  feature_dir: FEAT_DIR
+  # csv list containing slide_ids (can additionally have seg/patch paramters, class labels, etc.)
+  ground_truth_csv: csvs/camelyon16.csv
+  # split directory
+  split_dir: splits/camelyon16/
+  # whether to shuffle data
+  shuffle_data: False
+  # whether to print dataset info
+  print_info: True
+  # whether to make sure the slides from the same patients are in the same data split (train/val/test)
+  patient_strat: False
+  # label dictionary for str: interger mapping (optional)
+  label_dict:
+    normal: 0
+    tumor: 1  
+
+model_arguments: 
+  # type of the model
+  model_type: IAT 
+  # whether to use attention gate
+  gate: True
+  # hidden dimensions
+  hidden_dims: [1024,1536,512,1024]
+  # dropout configuration
+  dropout: 0.25
+  # numbr of positive/negative patches to sample for IAT
+  k_sample: 8
+  # number of classes
+  n_classes: 2
+  # input feature
+  feat_in: 1024
+  # whether include instance-level clustering
+  inst_cluster: True
+  # weight coefficient for inst-level loss (default: 0.3)
+  inst_weight: 0.5
+  # clam: weight coefficient for bag-level loss (default: 0.7)
+  bag_weight: 0.5
+  # bag loss (svm, ce)
+  bag_loss: ce
+  # instance loss (svm, ce)
+  inst_loss: svm
+  # subtyping problem
+  subtyping: False
